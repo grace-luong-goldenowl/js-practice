@@ -1,0 +1,14 @@
+{
+    "user": {
+        "id": 1,
+        "username": "johndoe",
+        "email": "john.doe@example.com",
+        "firstName": "John",
+        "lastName": "Doe",
+        "age": 28,
+        "phone": "+1-555-0123",
+        "isActive": true,
+        "role": "admin",
+        "createdAt": "2023-01-15T10:30:00Z"
+    }
+}
