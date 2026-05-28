@@ -1,45 +1,541 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div id="menu">
-  <button data-action="save">Save</button>
-  <button data-action="load">Load</button>
-  <button data-action="search">Search</button>
-</div>
-</body>
-</html>
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+  </head>
+  <body>
+    <div class="section">
+      <h3>1. Event Delegation - Menu with data attributes</h3>
+      <div id="menu">
+        <button data-action="save">Save</button>
+        <button data-action="load">Load</button>
+        <button data-action="search">Search</button>
+      </div>
+    </div>
 
-<script>
-  class Menu {
-    constructor(elem) {
-      this._elem = elem;
-      elem.onclick = this.onClick.bind(this); // (*)
-    }
+    <div class="section">
+      <h3>2. addEventListener</h3>
+      <button id="simpleBtn">Click me</button>
+    </div>
 
-    save() {
-      alert('saving');
-    }
+    <div class="section">
+      <h3>3. Multiple Event Handlers</h3>
+      <input id="multiBtn" type="button" value="Click for multiple handlers" />
+    </div>
 
-    load() {
-      alert('loading');
-    }
+    <div class="section">
+      <h3>4. Event Object - Click Coordinates</h3>
+      <button id="coordBtn">Click anywhere on me</button>
+      <div id="coordOutput"></div>
+    </div>
 
-    search() {
-      alert('searching');
-    }
+    <div class="section">
+      <h3>5. HTML Attribute Handler (onclick)</h3>
+      <input type="button" onclick="showRabbits()" value="Count rabbits!" />
+    </div>
 
-    onClick(event) {
-      let action = event.target.dataset.action;
-      if (action) {
-        this[action]();
+    <div class="section">
+      <h3>6. Using 'this' in Handler</h3>
+      <button id="thisBtn">Click me to see my content</button>
+    </div>
+
+    <div class="section">
+      <h3>7. Object Handler with handleEvent Method</h3>
+      <button id="objectHandlerBtn">Mouse down/up events</button>
+      <div id="objectOutput"></div>
+    </div>
+
+    <div class="section">
+      <h3>8. Event Delegation - Table Cell Highlighting</h3>
+      <table id="tableExample" border="1" cellpadding="8" style="width: 100%">
+        <tr>
+          <td>Row 1, Col 1</td>
+          <td>Row 1, Col 2</td>
+          <td>Row 1, <strong>Bold</strong> Col 3</td>
+        </tr>
+        <tr>
+          <td>Row 2, Col 1</td>
+          <td>Row 2, Col 2</td>
+          <td>Row 2, Col 3</td>
+        </tr>
+        <tr>
+          <td>Row 3, Col 1</td>
+          <td>Row 3, Col 2</td>
+          <td>Row 3, Col 3</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <h3>9. Behavior Pattern - Counter with data-counter</h3>
+      <p>
+        Counter: <input type="button" value="1" data-counter /> One more:
+        <input type="button" value="2" data-counter />
+      </p>
+    </div>
+
+    <div class="section">
+      <h3>10. Behavior Pattern - Toggler with data-toggle-id</h3>
+      <button data-toggle-id="subscribe-mail">Show subscription form</button>
+      <form id="subscribe-mail" hidden>Your email: <input type="email" /></form>
+    </div>
+
+    <div class="section">
+      <h3>11. Custom Event - Dispatch Hello Event</h3>
+      <h2 id="customEventElem">Dispatching custom events!</h2>
+      <button id="customEventBtn">Dispatch Custom Event</button>
+    </div>
+
+    <div class="section">
+      <h3>12. Custom Event with Detail Data</h3>
+      <button id="greetBtn">Greet John</button>
+      <div id="greetOutput"></div>
+    </div>
+
+    <div class="section">
+      <h3>13. Dispatching Built-in Events</h3>
+      <button id="autoClickBtn" onclick="alert('Button clicked!')">
+        Click me (or dispatch programmatically)
+      </button>
+      <button id="triggerClickBtn">Trigger click event</button>
+    </div>
+
+    <div class="section">
+      <h3>14. MouseEvent with Coordinates</h3>
+      <button id="mouseEventBtn">Dispatch click at (100, 100)</button>
+      <div id="mouseEventOutput"></div>
+    </div>
+
+    <div class="section">
+      <h3>15. preventDefault with Custom Events</h3>
+      <pre id="hideRabbit">
+    |\   /|
+     \|_|/
+     /. .\
+    =\_Y_/=
+     {>o<}
+      </pre>
+      <button id="hideRabbitBtn">Hide Rabbit</button>
+      <div id="rabbitOutput"></div>
+    </div>
+
+    <div class="section">
+      <h3>16. preventDefault() - Preventing Link Navigation</h3>
+      <a href="https://example.com" id="preventedLink">Click me (prevented)</a>
+      <div id="preventedLinkOutput"></div>
+    </div>
+
+    <div class="section">
+      <h3>17. Context Menu - event.defaultPrevented</h3>
+      <p>Right-click anywhere here for document context menu</p>
+      <button id="contextBtn">Right-click here for button menu</button>
+      <div id="contextOutput"></div>
+    </div>
+
+    <div class="section">
+      <h3>18. Event Bubbling - Nested Elements (Form &gt; Div &gt; P)</h3>
+      <form id="bubblingForm" style="border: 2px solid #333; padding: 10px">
+        <div style="border: 2px solid #666; padding: 10px">
+          <p id="bubblingP" style="border: 2px solid #999; padding: 10px">
+            Click me to see bubbling order
+          </p>
+        </div>
+      </form>
+      <div id="bubblingOutput"></div>
+    </div>
+
+    <div class="section">
+      <h3>19. event.target vs this (event.currentTarget)</h3>
+      <div id="targetContainer" style="border: 2px solid #000; padding: 10px">
+        Container with nested:
+        <button id="nestedBtn">Button inside</button>
+        <span id="nestedSpan">Span inside</span>
+      </div>
+      <div id="targetOutput"></div>
+    </div>
+
+    <div class="section">
+      <h3>20. event.stopPropagation() - Stop Bubbling</h3>
+      <div id="outerDiv" style="border: 2px solid #f00; padding: 10px">
+        Outer (bubbling enabled)
+        <button id="stopBtn">Click to stop bubbling</button>
+      </div>
+      <div id="stopPropOutput"></div>
+    </div>
+
+    <div class="section">
+      <h3>21. Capturing Phase - addEventListener with capture: true</h3>
+      <div id="capForm" style="border: 2px solid #00f; padding: 10px">
+        FORM
+        <div style="border: 2px solid #0f0; padding: 10px">
+          DIV
+          <p id="capP" style="border: 2px solid #0ff; padding: 10px">
+            P (click me)
+          </p>
+        </div>
+      </div>
+      <div id="capturingOutput"></div>
+    </div>
+
+    <script>
+      // Event Delegation - Menu with data attributes
+      class Menu {
+        constructor(elem) {
+          this._elem = elem;
+          elem.onclick = this.onClick.bind(this);
+        }
+
+        save() {
+          alert("saving");
+        }
+
+        load() {
+          alert("loading");
+        }
+
+        search() {
+          alert("searching");
+        }
+
+        onClick(event) {
+          let action = event.target.dataset.action;
+          if (action) {
+            this[action]();
+          }
+        }
       }
-    };
-  }
 
-  new Menu(menu); // create Menu for the element with id="menu"
-</script>
+      new Menu(document.getElementById("menu"));
+
+      // Simple addEventListener
+      const simpleBtn = document.getElementById("simpleBtn");
+      simpleBtn.addEventListener("click", function () {
+        alert("Thank you!");
+      });
+
+      //Multiple Event Handlers
+      const multiBtn = document.getElementById("multiBtn");
+
+      function handler1() {
+        alert("Thanks!");
+      }
+
+      function handler2() {
+        alert("Thanks again!");
+      }
+
+      // Multiple handlers can be attached with addEventListener
+      multiBtn.addEventListener("click", handler1);
+      multiBtn.addEventListener("click", handler2);
+
+      //Event Object - Click Coordinates
+      
+      const coordBtn = document.getElementById("coordBtn");
+      const coordOutput = document.getElementById("coordOutput");
+
+      coordBtn.addEventListener("click", function (event) {
+        coordOutput.innerHTML = `Event type: ${event.type}<br>
+                             X: ${event.clientX}, Y: ${event.clientY}`;
+      });
+
+      //HTML Attribute Handler
+      
+      function showRabbits() {
+        for (let i = 1; i <= 3; i++) {
+          alert("Rabbit number " + i);
+        }
+      }
+
+      //Using 'this' in Handler
+      
+      const thisBtn = document.getElementById("thisBtn");
+      thisBtn.addEventListener("click", function () {
+        alert("Button says: " + this.innerHTML);
+      });
+
+      //Object Handler with handleEvent Method
+      
+      const objectHandlerBtn = document.getElementById("objectHandlerBtn");
+      const objectOutput = document.getElementById("objectOutput");
+
+      let objHandler = {
+        handleEvent(event) {
+          switch (event.type) {
+            case "mousedown":
+              objectOutput.innerHTML = "Mouse button pressed";
+              break;
+            case "mouseup":
+              objectOutput.innerHTML += "...and released.";
+              break;
+          }
+        },
+      };
+
+      objectHandlerBtn.addEventListener("mousedown", objHandler);
+      objectHandlerBtn.addEventListener("mouseup", objHandler);
+
+      //Event Delegation - Table Highlighting
+      let selectedTd;
+      const tableExample = document.getElementById("tableExample");
+
+      tableExample.onclick = function (event) {
+        let td = event.target.closest("td");
+        if (!td) return;
+        if (!tableExample.contains(td)) return;
+
+        highlight(td);
+      };
+
+      function highlight(td) {
+        if (selectedTd) {
+          selectedTd.classList.remove("highlight");
+        }
+        selectedTd = td;
+        selectedTd.classList.add("highlight");
+      }
+
+      const style = document.createElement("style");
+      style.textContent =
+        "#tableExample .highlight { background-color: yellow; }";
+      document.head.appendChild(style);
+
+      //Behavior Pattern - Counter with data-counter
+      document.addEventListener("click", function (event) {
+        if (event.target.dataset.counter !== undefined) {
+          event.target.value++;
+        }
+      });
+
+      // Behavior Pattern - Toggler with data-toggle-id
+      document.addEventListener("click", function (event) {
+        let id = event.target.dataset.toggleId;
+        if (!id) return;
+
+        let elem = document.getElementById(id);
+        if (elem) {
+          elem.hidden = !elem.hidden;
+        }
+      });
+
+      // Custom Event - Basic
+      const customEventElem = document.getElementById("customEventElem");
+      const customEventBtn = document.getElementById("customEventBtn");
+
+      customEventElem.addEventListener("hello", function (event) {
+        alert("Hello from " + event.target.tagName);
+      });
+
+      customEventBtn.addEventListener("click", function () {
+        let event = new Event("hello", { bubbles: true });
+        customEventElem.dispatchEvent(event);
+      });
+
+      // Custom Event with Detail
+      const greetBtn = document.getElementById("greetBtn");
+      const greetOutput = document.getElementById("greetOutput");
+
+      greetBtn.addEventListener("click", function () {
+        let event = new CustomEvent("greet", {
+          detail: { name: "John" },
+        });
+        greetBtn.dispatchEvent(event);
+      });
+
+      greetBtn.addEventListener("greet", function (event) {
+        greetOutput.textContent = "Hello, " + event.detail.name + "!";
+      });
+
+      // Dispatching Built-in Events
+      const autoClickBtn = document.getElementById("autoClickBtn");
+      const triggerClickBtn = document.getElementById("triggerClickBtn");
+
+      triggerClickBtn.addEventListener("click", function () {
+        let event = new Event("click");
+        autoClickBtn.dispatchEvent(event);
+      });
+
+      // MouseEvent with Properties
+      const mouseEventBtn = document.getElementById("mouseEventBtn");
+      const mouseEventOutput = document.getElementById("mouseEventOutput");
+
+      mouseEventBtn.addEventListener("click", function () {
+        let event = new MouseEvent("click", {
+          bubbles: true,
+          cancelable: true,
+          clientX: 100,
+          clientY: 100,
+        });
+        mouseEventOutput.textContent = `Dispatched click at (${event.clientX}, ${event.clientY})`;
+      });
+
+      // preventDefault with Custom Events
+      const hideRabbitBtn = document.getElementById("hideRabbitBtn");
+      const hideRabbit = document.getElementById("hideRabbit");
+      const rabbitOutput = document.getElementById("rabbitOutput");
+
+      function hideRabbitFunc() {
+        let event = new CustomEvent("hide", {
+          cancelable: true,
+        });
+
+        if (!hideRabbit.dispatchEvent(event)) {
+          rabbitOutput.textContent = "Hide was prevented!";
+        } else {
+          hideRabbit.hidden = true;
+          rabbitOutput.textContent = "Rabbit is hidden!";
+        }
+      }
+
+      hideRabbitBtn.addEventListener("click", hideRabbitFunc);
+
+      hideRabbit.addEventListener("hide", function (event) {
+        if (confirm("Prevent hiding?")) {
+          event.preventDefault();
+        }
+      });
+
+      // preventDefault() with Links
+      const preventedLink = document.getElementById("preventedLink");
+      const preventedLinkOutput = document.getElementById(
+        "preventedLinkOutput",
+      );
+
+      preventedLink.addEventListener("click", function (event) {
+        event.preventDefault();
+        preventedLinkOutput.textContent =
+          "Link navigation prevented! (would have gone to " + this.href + ")";
+      });
+
+      // Context Menu - event.defaultPrevented
+      const contextBtn = document.getElementById("contextBtn");
+      const contextOutput = document.getElementById("contextOutput");
+
+      contextBtn.oncontextmenu = function (event) {
+        event.preventDefault();
+        contextOutput.textContent = "Button context menu shown!";
+      };
+
+      document.oncontextmenu = function (event) {
+        if (event.defaultPrevented) return;
+
+        event.preventDefault();
+        contextOutput.textContent = "Document context menu shown!";
+      };
+
+      // Event Bubbling - nested elements
+      const bubblingForm = document.getElementById("bubblingForm");
+      const bubblingDiv = bubblingForm.querySelector("div");
+      const bubblingP = document.getElementById("bubblingP");
+      const bubblingOutput = document.getElementById("bubblingOutput");
+
+      let bubblingLog = [];
+
+      bubblingForm.onclick = function (event) {
+        bubblingLog.push("FORM");
+      };
+
+      bubblingDiv.onclick = function (event) {
+        bubblingLog.push("DIV");
+      };
+
+      bubblingP.onclick = function (event) {
+        bubblingLog.push("P");
+        bubblingOutput.textContent =
+          "Bubbling order: " + bubblingLog.join(" → ");
+        bubblingLog = [];
+      };
+
+      // event.target vs this (currentTarget)
+      const targetContainer = document.getElementById("targetContainer");
+      const nestedBtn = document.getElementById("nestedBtn");
+      const nestedSpan = document.getElementById("nestedSpan");
+      const targetOutput = document.getElementById("targetOutput");
+
+      targetContainer.addEventListener("click", function (event) {
+        targetOutput.innerHTML =
+          "<strong>event.target:</strong> " +
+          event.target.tagName +
+          " (" +
+          event.target.id +
+          ")<br>" +
+          "<strong>this / event.currentTarget:</strong> " +
+          this.tagName +
+          " (" +
+          this.id +
+          ")";
+      });
+
+      // stopPropagation()
+      const outerDiv = document.getElementById("outerDiv");
+      const stopBtn = document.getElementById("stopBtn");
+      const stopPropOutput = document.getElementById("stopPropOutput");
+
+      let stopPropLog = [];
+
+      outerDiv.addEventListener("click", function (event) {
+        if (event.target !== stopBtn) {
+          stopPropLog.push("Outer div clicked");
+          stopPropOutput.textContent = stopPropLog.join(" | ");
+        }
+      });
+
+      stopBtn.addEventListener("click", function (event) {
+        stopPropLog.push("Stop button clicked");
+        event.stopPropagation(); // Prevent bubbling to outerDiv
+        stopPropOutput.textContent =
+          stopPropLog.join(" | ") + " (bubbling stopped!)";
+        stopPropLog = [];
+      });
+
+      // Capturing Phase
+      const capForm = document.getElementById("capForm");
+      const capDiv = capForm.querySelector("div");
+      const capP = document.getElementById("capP");
+      const capturingOutput = document.getElementById("capturingOutput");
+
+      let capturingLog = [];
+
+      // Capturing phase (true parameter)
+      capForm.addEventListener(
+        "click",
+        function () {
+          capturingLog.push("FORM (capturing)");
+        },
+        true,
+      );
+
+      capDiv.addEventListener(
+        "click",
+        function () {
+          capturingLog.push("DIV (capturing)");
+        },
+        true,
+      );
+
+      capP.addEventListener(
+        "click",
+        function () {
+          capturingLog.push("P (capturing)");
+        },
+        true,
+      );
+
+      // Bubbling phase (default)
+      capForm.addEventListener("click", function () {
+        capturingLog.push("FORM (bubbling)");
+      });
+
+      capDiv.addEventListener("click", function () {
+        capturingLog.push("DIV (bubbling)");
+      });
+
+      capP.addEventListener("click", function () {
+        capturingLog.push("P (bubbling)");
+        capturingOutput.textContent = "Order: " + capturingLog.join(" → ");
+        capturingLog = [];
+      });
+    </script>
+  </body>
+</html>
